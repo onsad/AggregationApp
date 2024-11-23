@@ -1,4 +1,5 @@
 using AggregationApp.Services;
+using AggregationRepository.Repository;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 
@@ -20,6 +21,7 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 builder.Services.AddTransient<AggregationService>();
+builder.Services.AddScoped<OrderRepository>();
 
 var app = builder.Build();
 

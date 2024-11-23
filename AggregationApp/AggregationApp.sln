@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34525.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AggregationApp", "AggregationApp.csproj", "{8C2BBE5E-8B9B-4447-ACF7-E6A30565DC6E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AggregationApp", "AggregationApp.csproj", "{8C2BBE5E-8B9B-4447-ACF7-E6A30565DC6E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AggregationRepository", "..\AggregationRepository\AggregationRepository.csproj", "{BF00BD26-66C6-4717-B1A9-0C0AB0AF1046}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,10 +17,10 @@ Global
 		{8C2BBE5E-8B9B-4447-ACF7-E6A30565DC6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8C2BBE5E-8B9B-4447-ACF7-E6A30565DC6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8C2BBE5E-8B9B-4447-ACF7-E6A30565DC6E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3265A660-7C01-4FE6-B665-8DCB1C3323E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3265A660-7C01-4FE6-B665-8DCB1C3323E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3265A660-7C01-4FE6-B665-8DCB1C3323E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3265A660-7C01-4FE6-B665-8DCB1C3323E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF00BD26-66C6-4717-B1A9-0C0AB0AF1046}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF00BD26-66C6-4717-B1A9-0C0AB0AF1046}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF00BD26-66C6-4717-B1A9-0C0AB0AF1046}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF00BD26-66C6-4717-B1A9-0C0AB0AF1046}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
