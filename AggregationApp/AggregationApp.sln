@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AggregationApp", "Aggregati
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AggregationRepository", "..\AggregationRepository\AggregationRepository.csproj", "{BF00BD26-66C6-4717-B1A9-0C0AB0AF1046}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AggregationAppTest", "..\AggregationAppTest\AggregationAppTest.csproj", "{32008992-12A2-4911-A00F-5E36E9FC7AD9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{BF00BD26-66C6-4717-B1A9-0C0AB0AF1046}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF00BD26-66C6-4717-B1A9-0C0AB0AF1046}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF00BD26-66C6-4717-B1A9-0C0AB0AF1046}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32008992-12A2-4911-A00F-5E36E9FC7AD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32008992-12A2-4911-A00F-5E36E9FC7AD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32008992-12A2-4911-A00F-5E36E9FC7AD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32008992-12A2-4911-A00F-5E36E9FC7AD9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
