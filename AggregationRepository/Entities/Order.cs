@@ -1,4 +1,6 @@
-﻿namespace AggregationRepository.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace AggregationRepository.Entities
 {
     /// <summary>
     /// Represents order.
@@ -19,5 +21,10 @@
         /// Count of products in the order.
         /// </summary>
         public int Quantity { get; set; }
+
+        /// <summary>
+        /// Count of products in the order.
+        /// </summary>
+        public bool IsExported { get; set; }
     }
 }

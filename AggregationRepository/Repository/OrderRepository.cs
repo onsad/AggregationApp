@@ -22,5 +22,42 @@ namespace AggregationRepository.Repository
                 context.SaveChanges();
             }
         }
+
+        public List<Order> GetOrdersForExport()
+        {
+            var exportedOrders = new List<Order>(); 
+
+            using (var context = new ApiContext())
+            //using (var dbContextTransaction = context.Database.BeginTransaction())
+            {
+                try
+                {
+                    var listOrdersForExport = context.Orders.Where(o => !o.IsExported);
+
+                    if (listOrdersForExport.Any())
+                    {
+                        exportedOrders = listOrdersForExport.ToList();
+
+                        //listOrdersForExport.ExecuteUpdate(b => b.SetProperty(o => o.IsExported, true));
+                        foreach (var order in listOrdersForExport)
+                        {
+                            order.IsExported = true;
+                        }
+
+                        context.SaveChanges();
+
+                        //dbContextTransaction.Commit();
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error: " + ex.Message);
+                    //dbContextTransaction.Rollback();
+                }
+            }
+
+            return exportedOrders;
+        }
     }
 }

@@ -22,6 +22,10 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.AddTransient<AggregationService>();
 builder.Services.AddScoped<OrderRepository>();
+//builder.Services.AddHostedService<AggregationBackgroundService>();
+
+builder.Services.AddHostedService<ConsumeScopedServiceHostedService>();
+builder.Services.AddScoped<IScopedProcessingService, ScopedProcessingService>();
 
 var app = builder.Build();
 
