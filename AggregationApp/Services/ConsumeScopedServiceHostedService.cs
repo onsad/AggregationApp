@@ -1,16 +1,10 @@
 ﻿namespace AggregationApp.Services
 {
-    public class ConsumeScopedServiceHostedService : BackgroundService
+    public class ConsumeScopedServiceHostedService(IServiceProvider services, ILogger<ConsumeScopedServiceHostedService> logger) : BackgroundService
     {
-        private readonly ILogger<ConsumeScopedServiceHostedService> logger;
+        private readonly ILogger<ConsumeScopedServiceHostedService> logger = logger;
 
-        public ConsumeScopedServiceHostedService(IServiceProvider services, ILogger<ConsumeScopedServiceHostedService> logger)
-        {
-            Services = services;
-            this.logger = logger;
-        }
-
-        public IServiceProvider Services { get; }
+        public IServiceProvider Services { get; } = services;
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {

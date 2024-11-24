@@ -1,6 +1,5 @@
 ﻿using AggregationApp.Models;
 using AggregationRepository.Repository;
-using System.Text.Json;
 
 namespace AggregationApp.Services
 {
@@ -8,25 +7,21 @@ namespace AggregationApp.Services
     {
         private readonly ILogger<AggregationService> logger = logger;
 
-        public List<Models.Order> GetOrders()
+        public List<Order> GetOrders()
         {
-            var ord = orderRepository.GetOrders().Select(o => new Models.Order { ProductId = o.ProductId, Quantity = o.Quantity }).ToList();
-            return ord;
+            return orderRepository.GetOrders().Select(o => new Order { ProductId = o.ProductId, Quantity = o.Quantity }).ToList();
         }
 
-        public void SaveOrders(List<Models.Order> orders)
+        public void SaveOrders(List<Order> orders)
         {
-            var or = orders.Select(o => new AggregationRepository.Entities.Order { ProductId = o.ProductId, Quantity = o.Quantity }).ToList();
+            var or = orders.Select(o => new AggregationRepository.Entities.Order { ProductId = o.ProductId, Quantity = o.Quantity, IsExported = false }).ToList();
             orderRepository.SaveOrders(or);
         }
 
-        public void ExportAggregateOrders()
+        public List<AggregationResult> ExportAggregateOrders()
         {
             var ordersForExport = orderRepository.GetOrdersForExport();
-            var aggregateOrders = ordersForExport.GroupBy(o => o.ProductId).Select(t => new AggregationResult { ProductId = t.Key, CountOfProducts = t.Sum(u => u.Quantity) }).ToList();
-            string s = JsonSerializer.Serialize(aggregateOrders);
-
-            this.logger.LogInformation($"Aggregate orders: {s}");
+            return ordersForExport.GroupBy(o => o.ProductId).Select(t => new AggregationResult { ProductId = t.Key, CountOfProducts = t.Sum(u => u.Quantity) }).ToList();
         }
     }
 }

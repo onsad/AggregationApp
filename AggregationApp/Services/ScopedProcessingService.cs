@@ -1,21 +1,18 @@
-﻿namespace AggregationApp.Services
-{
-    public class ScopedProcessingService : IScopedProcessingService
-    {
-        private readonly ILogger logger;
-        private readonly AggregationService aggregationService;
+﻿using System.Text.Json;
 
-        public ScopedProcessingService(ILogger<ScopedProcessingService> logger, AggregationService aggregationService)
-        {
-            this.logger = logger;
-            this.aggregationService = aggregationService;
-        }
+namespace AggregationApp.Services
+{
+    public class ScopedProcessingService(ILogger<ScopedProcessingService> logger, AggregationService aggregationService) : IScopedProcessingService
+    {
+        private readonly ILogger<ScopedProcessingService> logger = logger;
+        private readonly AggregationService aggregationService = aggregationService;
 
         public async Task DoWork(CancellationToken stoppingToken)
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                this.aggregationService.ExportAggregateOrders();
+                var result = this.aggregationService.ExportAggregateOrders();
+                logger.LogInformation(JsonSerializer.Serialize(result));
 
                 await Task.Delay(25000, stoppingToken);
             }

@@ -10,8 +10,7 @@ namespace AggregationRepository.Repository
         {
             using (var context = new ApiContext())
             {
-                var list = context.Orders.ToList();
-                return list;
+                return context.Orders.ToList();
             }
         }
 
