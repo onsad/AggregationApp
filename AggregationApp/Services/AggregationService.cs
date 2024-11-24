@@ -12,8 +12,19 @@ namespace AggregationApp.Services
 
         public void SaveOrders(List<Order> orders)
         {
-            var or = orders.Select(o => new AggregationRepository.Entities.Order { ProductId = o.ProductId, Quantity = o.Quantity }).ToList();
-            orderRepository.SaveOrders(or);
+            foreach (var ord in orders)
+            {
+                var orderFromDb = orderRepository.GetOrderByProductId(ord.ProductId);
+                if (orderFromDb == null)
+                {
+                    orderRepository.SaveOrder(new AggregationRepository.Entities.Order { ProductId = ord.ProductId, Quantity = ord.Quantity });
+                }
+                else
+                {
+                    orderFromDb.Quantity += ord.Quantity;
+                    orderRepository.Update(orderFromDb);
+                }
+            }
         }
 
         public List<AggregationResult> ExportAggregateOrders()

@@ -3,8 +3,16 @@ using AggregationRepository.Entities;
 
 namespace AggregationRepository.Repository
 {
-    public class OrderRepository
+    public class OrderRepository : IOrderRepository
     {
+        public Order? GetOrderByProductId(int productId)
+        {
+            using (var context = new ApiContext())
+            {
+                return context.Orders.FirstOrDefault(o => o.ProductId == productId);
+            }
+        }
+
         public List<Order> GetOrders()
         {
             using (var context = new ApiContext())
@@ -30,6 +38,24 @@ namespace AggregationRepository.Repository
                     }
                 }
 
+                context.SaveChanges();
+            }
+        }
+
+        public void SaveOrder(Order order)
+        {
+            using (var context = new ApiContext())
+            {
+                context.Orders.Add(order);
+                context.SaveChanges();
+            }
+        }
+
+        public void Update(Order order)
+        {
+            using (var context = new ApiContext())
+            {
+                context.Update(order);
                 context.SaveChanges();
             }
         }
