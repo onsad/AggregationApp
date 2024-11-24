@@ -1,12 +1,13 @@
 ﻿using AggregationApp.Models;
-using AggregationRepository.Entities;
 using AggregationRepository.Repository;
 using System.Text.Json;
 
 namespace AggregationApp.Services
 {
-    public class AggregationService(OrderRepository orderRepository)
+    public class AggregationService(OrderRepository orderRepository, ILogger<AggregationService> logger)
     {
+        private readonly ILogger<AggregationService> logger = logger;
+
         public List<Models.Order> GetOrders()
         {
             var ord = orderRepository.GetOrders().Select(o => new Models.Order { ProductId = o.ProductId, Quantity = o.Quantity }).ToList();
@@ -24,7 +25,8 @@ namespace AggregationApp.Services
             var ordersForExport = orderRepository.GetOrdersForExport();
             var aggregateOrders = ordersForExport.GroupBy(o => o.ProductId).Select(t => new AggregationResult { ProductId = t.Key, CountOfProducts = t.Sum(u => u.Quantity) }).ToList();
             string s = JsonSerializer.Serialize(aggregateOrders);
-            Console.WriteLine(s);
+
+            this.logger.LogInformation($"Aggregate orders: {s}");
         }
     }
 }

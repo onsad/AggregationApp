@@ -1,9 +1,10 @@
 ﻿using AggregationRepository.Context;
 using AggregationRepository.Entities;
+using Microsoft.Extensions.Logging;
 
 namespace AggregationRepository.Repository
 {
-    public class OrderRepository
+    public class OrderRepository(ILogger<OrderRepository> logger)
     {
         public List<Order> GetOrders()
         {
@@ -28,7 +29,6 @@ namespace AggregationRepository.Repository
             var exportedOrders = new List<Order>(); 
 
             using (var context = new ApiContext())
-            //using (var dbContextTransaction = context.Database.BeginTransaction())
             {
                 try
                 {
@@ -38,22 +38,18 @@ namespace AggregationRepository.Repository
                     {
                         exportedOrders = listOrdersForExport.ToList();
 
-                        //listOrdersForExport.ExecuteUpdate(b => b.SetProperty(o => o.IsExported, true));
                         foreach (var order in listOrdersForExport)
                         {
                             order.IsExported = true;
                         }
 
                         context.SaveChanges();
-
-                        //dbContextTransaction.Commit();
                     }
 
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Error: " + ex.Message);
-                    //dbContextTransaction.Rollback();
+                    logger.LogError($"Error: {ex.Message}");
                 }
             }
 
