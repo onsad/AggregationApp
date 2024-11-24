@@ -1,10 +1,9 @@
 ﻿using AggregationRepository.Context;
 using AggregationRepository.Entities;
-using Microsoft.Extensions.Logging;
 
 namespace AggregationRepository.Repository
 {
-    public class OrderRepository(ILogger<OrderRepository> logger)
+    public class OrderRepository
     {
         public List<Order> GetOrders()
         {
@@ -18,41 +17,21 @@ namespace AggregationRepository.Repository
         {
             using (var context = new ApiContext())
             {
-                context.Orders.AddRange(orders);
+                foreach (var ord in orders)
+                {
+                    var orderInDb = context.Orders.SingleOrDefault(o => o.ProductId == ord.ProductId);
+                    if (orderInDb != null)
+                    {
+                        orderInDb.Quantity += ord.Quantity;
+                    }
+                    else
+                    {
+                        context.Orders.Add(ord);
+                    }
+                }
+
                 context.SaveChanges();
             }
-        }
-
-        public List<Order> GetOrdersForExport()
-        {
-            var exportedOrders = new List<Order>(); 
-
-            using (var context = new ApiContext())
-            {
-                try
-                {
-                    var listOrdersForExport = context.Orders.Where(o => !o.IsExported);
-
-                    if (listOrdersForExport.Any())
-                    {
-                        exportedOrders = listOrdersForExport.ToList();
-
-                        foreach (var order in listOrdersForExport)
-                        {
-                            order.IsExported = true;
-                        }
-
-                        context.SaveChanges();
-                    }
-
-                }
-                catch (Exception ex)
-                {
-                    logger.LogError($"Error: {ex.Message}");
-                }
-            }
-
-            return exportedOrders;
         }
     }
 }

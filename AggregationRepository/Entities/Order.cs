@@ -24,11 +24,5 @@ namespace AggregationRepository.Entities
         /// </summary>
         [Required]
         public int Quantity { get; set; }
-
-        /// <summary>
-        /// Count of products in the order.
-        /// </summary>
-        [Required]
-        public bool IsExported { get; set; }
     }
 }

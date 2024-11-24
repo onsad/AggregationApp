@@ -12,7 +12,7 @@ namespace AggregationApp.Services
             while (!stoppingToken.IsCancellationRequested)
             {
                 var result = this.aggregationService.ExportAggregateOrders();
-                logger.LogInformation(JsonSerializer.Serialize(result));
+                logger.LogInformation($"Aggregate orders: {JsonSerializer.Serialize(result)}");
 
                 await Task.Delay(25000, stoppingToken);
             }
