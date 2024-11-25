@@ -1,62 +1,71 @@
 ﻿using AggregationRepository.Context;
 using AggregationRepository.Entities;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace AggregationRepository.Repository
 {
-    public class OrderRepository : IOrderRepository
+    public class OrderRepository(ApiContext apiContext, ILogger<OrderRepository> logger) : IOrderRepository
     {
         public Order? GetOrderByProductId(int productId)
         {
-            using (var context = new ApiContext())
-            {
-                return context.Orders.FirstOrDefault(o => o.ProductId == productId);
-            }
+            return apiContext.Orders.FirstOrDefault(o => o.ProductId == productId);
         }
 
         public List<Order> GetOrders()
         {
-            using (var context = new ApiContext())
-            {
-                return context.Orders.ToList();
-            }
+            return apiContext.Orders.ToList();
         }
 
         public void SaveOrders(List<Order> orders)
         {
-            using (var context = new ApiContext())
+            try
             {
                 foreach (var ord in orders)
                 {
-                    var orderInDb = context.Orders.SingleOrDefault(o => o.ProductId == ord.ProductId);
+                    var orderInDb = apiContext.Orders.SingleOrDefault(o => o.ProductId == ord.ProductId);
                     if (orderInDb != null)
                     {
                         orderInDb.Quantity += ord.Quantity;
                     }
                     else
                     {
-                        context.Orders.Add(ord);
+                        apiContext.Orders.Add(ord);
                     }
                 }
 
-                context.SaveChanges();
+                apiContext.SaveChanges();
             }
+            catch (DbUpdateException ex)
+            {
+                logger.LogError(ex.Message);
+            }
+            
         }
 
         public void SaveOrder(Order order)
         {
-            using (var context = new ApiContext())
+            try
             {
-                context.Orders.Add(order);
-                context.SaveChanges();
+                apiContext.Orders.Add(order);
+                apiContext.SaveChanges();
+            }
+            catch (DbUpdateException ex)
+            {
+                logger.LogError(ex.Message);
             }
         }
 
         public void Update(Order order)
         {
-            using (var context = new ApiContext())
+            try
             {
-                context.Update(order);
-                context.SaveChanges();
+                apiContext.Update(order);
+                apiContext.SaveChanges();
+            }
+            catch (DbUpdateException ex)
+            {
+                logger.LogError(ex.Message);
             }
         }
     }

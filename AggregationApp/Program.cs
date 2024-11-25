@@ -1,7 +1,10 @@
 using AggregationApp.Services;
+using AggregationRepository.Context;
 using AggregationRepository.Repository;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using System;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,6 +30,7 @@ builder.Services.AddSwaggerGen(c =>
     c.IncludeXmlComments(xmlPath);
 });
 
+builder.Services.AddDbContext<ApiContext>();
 builder.Services.AddTransient<AggregationService>();
 builder.Services.AddScoped<OrderRepository>();
 
