@@ -31,10 +31,10 @@ namespace AggregationAppTest
             };
             aggregationService?.SaveOrders(order);
 
-            var res = aggregationService?.ExportAggregateOrders();
+            var res = aggregationService?.GetOrders();
 
             var count = res?.Count;
-            var quantity = res?.First().CountOfProducts;
+            var quantity = res?.First().Quantity;
 
             Assert.That(count, Is.EqualTo(1));
             Assert.That(quantity, Is.EqualTo(4));
@@ -51,11 +51,11 @@ namespace AggregationAppTest
             };
             aggregationService?.SaveOrders(order);
 
-            var res = aggregationService?.ExportAggregateOrders();
+            var res = aggregationService?.GetOrders();
 
             var count = res?.Count;
-            var firstOrderQuantity = res?.First().CountOfProducts;
-            var secondOrderQuantity = res?.Last().CountOfProducts;
+            var firstOrderQuantity = res?.First().Quantity;
+            var secondOrderQuantity = res?.Last().Quantity;
 
 
             Assert.That(count, Is.EqualTo(2));
@@ -75,12 +75,12 @@ namespace AggregationAppTest
             };
             aggregationService?.SaveOrders(order);
 
-            var res = aggregationService?.ExportAggregateOrders();
+            var res = aggregationService?.GetOrders();
 
             var count = res?.Count;
-            var firstOrderQuantity = res?.First().CountOfProducts;
-            var secondOrderQuantity = res?.ElementAt(1).CountOfProducts;
-            var thirdOrderQuantity = res?.ElementAt(2).CountOfProducts;
+            var firstOrderQuantity = res?.First().Quantity;
+            var secondOrderQuantity = res?.ElementAt(1).Quantity;
+            var thirdOrderQuantity = res?.ElementAt(2).Quantity;
 
             Assert.That(count, Is.EqualTo(3));
             Assert.That(firstOrderQuantity, Is.EqualTo(4));

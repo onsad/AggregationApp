@@ -12,12 +12,18 @@ namespace AggregationApp.Services
 
         public void SaveOrders(List<Order> orders)
         {
-            foreach (var ord in orders)
+            var newOrdersForSave = new List<AggregationRepository.Entities.Order>();
+
+            var aggregateOrders = orders.GroupBy(o => o.ProductId).Select(t => 
+                new AggregationRepository.Entities.Order { ProductId = t.Key, Quantity = t.Sum(u => u.Quantity) }
+                ).ToList();
+
+            foreach (var ord in aggregateOrders)
             {
                 var orderFromDb = orderRepository.GetOrderByProductId(ord.ProductId);
                 if (orderFromDb == null)
                 {
-                    orderRepository.SaveOrder(new AggregationRepository.Entities.Order { ProductId = ord.ProductId, Quantity = ord.Quantity });
+                    newOrdersForSave.Add(new AggregationRepository.Entities.Order { ProductId = ord.ProductId, Quantity = ord.Quantity });
                 }
                 else
                 {
@@ -25,12 +31,11 @@ namespace AggregationApp.Services
                     orderRepository.Update(orderFromDb);
                 }
             }
-        }
 
-        public List<AggregationResult> ExportAggregateOrders()
-        {
-            var ordersForExport = orderRepository.GetOrders();
-            return ordersForExport.Select(t => new AggregationResult { ProductId = t.ProductId, CountOfProducts = t.Quantity }).ToList();
+            if (newOrdersForSave.Any())
+            {
+                orderRepository.SaveOrders(newOrdersForSave);
+            }
         }
     }
 }
