@@ -3,13 +3,16 @@ using AggregationRepository.Repository;
 
 namespace AggregationApp.Services
 {
-    public class AggregationService(OrderRepository orderRepository)
+    /// <inheritdoc/>
+    public class AggregationService(IOrderRepository orderRepository) : IAggregationService
     {
+        /// <inheritdoc/>
         public List<Order> GetOrders()
         {
             return orderRepository.GetOrders().Select(o => new Order { ProductId = o.ProductId, Quantity = o.Quantity }).ToList();
         }
 
+        /// <inheritdoc/>
         public void SaveOrders(List<Order> orders)
         {
             var newOrdersForSave = new List<AggregationRepository.Entities.Order>();
@@ -32,7 +35,7 @@ namespace AggregationApp.Services
                 }
             }
 
-            if (newOrdersForSave.Any())
+            if (newOrdersForSave.Count > 0)
             {
                 orderRepository.SaveOrders(newOrdersForSave);
             }

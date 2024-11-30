@@ -5,18 +5,22 @@ using Microsoft.Extensions.Logging;
 
 namespace AggregationRepository.Repository
 {
+    /// <inheritdoc/>
     public class OrderRepository(ApiContext apiContext, ILogger<OrderRepository> logger) : IOrderRepository
     {
+        /// <inheritdoc/>
         public Order? GetOrderByProductId(int productId)
         {
             return apiContext.Orders.FirstOrDefault(o => o.ProductId == productId);
         }
 
+        /// <inheritdoc/>
         public List<Order> GetOrders()
         {
             return apiContext.Orders.ToList();
         }
 
+        /// <inheritdoc/>
         public void SaveOrders(List<Order> orders)
         {
             try
@@ -43,6 +47,7 @@ namespace AggregationRepository.Repository
             
         }
 
+        /// <inheritdoc/>
         public void SaveOrder(Order order)
         {
             try
@@ -56,6 +61,7 @@ namespace AggregationRepository.Repository
             }
         }
 
+        /// <inheritdoc/>
         public void Update(Order order)
         {
             try

@@ -9,8 +9,8 @@ namespace AggregationAppTest
     [TestFixture]
     public class AggregationServiceTests
     {
-        OrderRepository? orderRepository;
-        AggregationService? aggregationService;
+        IOrderRepository? orderRepository;
+        IAggregationService? aggregationService;
         ApiContext apiContext;
         
         [SetUp]

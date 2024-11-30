@@ -6,7 +6,7 @@ namespace AggregationAppTest
 {
     public class OrderRepositoryTests
     {
-        OrderRepository? orderRepository;
+        IOrderRepository? orderRepository;
         ApiContext apiContext;
 
         [SetUp]
@@ -31,9 +31,9 @@ namespace AggregationAppTest
         {
             var ord = new List<AggregationRepository.Entities.Order> 
             { 
-                new AggregationRepository.Entities.Order { ProductId = 1, Quantity = 2 },
-                new AggregationRepository.Entities.Order { ProductId = 2, Quantity = 2 },
-                new AggregationRepository.Entities.Order { ProductId = 3, Quantity = 2 }
+                new() { ProductId = 1, Quantity = 2 },
+                new() { ProductId = 2, Quantity = 2 },
+                new() { ProductId = 3, Quantity = 2 }
             };
             orderRepository?.SaveOrders(ord);
 

@@ -6,9 +6,9 @@ namespace AggregationApp.Controllers
 {
     [Route("aggregation/[controller]")]
     [ApiController]
-    public class AggregationController(AggregationService aggregationService) : ControllerBase
+    public class AggregationController(IAggregationService aggregationService) : ControllerBase
     {
-        private readonly AggregationService aggregationService = aggregationService;
+        private readonly IAggregationService aggregationService = aggregationService;
 
         /// <summary>
         /// Returns all orders.
