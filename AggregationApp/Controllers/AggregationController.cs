@@ -4,6 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AggregationApp.Controllers
 {
+    /// <summary>
+    /// Controller for aggregation of Orders.
+    /// </summary>
+    /// <param name="aggregationService">Aggregation service.</param>
     [Route("aggregation/[controller]")]
     [ApiController]
     public class AggregationController(IAggregationService aggregationService) : ControllerBase
@@ -13,7 +17,7 @@ namespace AggregationApp.Controllers
         /// <summary>
         /// Returns all orders.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Collection of orders.</returns>
         [HttpGet(Name = "Return all orders")]
         public IActionResult Get()
         {
